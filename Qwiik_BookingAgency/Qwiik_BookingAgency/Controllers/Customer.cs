@@ -17,6 +17,11 @@ namespace Qwiik_BookingAgency.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Endpoint for customer to book for appointment
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Returns the token (id) given to the customer</returns>
         [HttpPost("BookAppointment/{date:datetime}")]
         public async Task<string> BookAppointment(DateTime date)
         {

@@ -17,12 +17,22 @@ namespace Qwiik_BookingAgency.Controllers
             _bookingService = bookingService;
         }
 
+        /// <summary>
+        /// The endpoint to get the list of customer having appointment at certain day.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Return the list of customers at certain day</returns>
         [HttpGet("GetAppointmentList/{date:datetime}")]
         public async Task<ScheduledAppointment> GetAppointmentList(DateTime date)
         {
             return await _bookingService.GetAppointmentSchedule(date.Date);
         }
 
+        /// <summary>
+        /// Set the rules for certain day, the objective is so the agency can set certain day as holiday or set a max number of customer at certain day.
+        /// </summary>
+        /// <param name="bookingRules"></param>
+        /// <returns>Return the status</returns>
         [HttpPost("SetBookingRules/")]
         public async Task<IActionResult> SetBookingRule(BookingRules bookingRules)
         {
