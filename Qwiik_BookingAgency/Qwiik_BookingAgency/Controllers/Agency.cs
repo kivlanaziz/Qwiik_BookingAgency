@@ -11,24 +11,22 @@ namespace Qwiik_BookingAgency.Controllers
     public class Agency : ControllerBase
     {
         IBookingService _bookingService;
-        ILogger<Agency> _logger;
 
-        public Agency(IBookingService bookingService, ILogger<Agency> logger)
+        public Agency(IBookingService bookingService)
         {
             _bookingService = bookingService;
-            _logger = logger;
         }
 
         [HttpGet("GetAppointmentList/{date:datetime}")]
-        public ActionResult<Appointment> GetAppointmentList(DateTime date)
+        public async Task<Appointment> GetAppointmentList(DateTime date)
         {
-            return _bookingService.GetAppointmentSchedule(date.Date);
+            return await _bookingService.GetAppointmentSchedule(date.Date);
         }
 
-        [HttpPost("SetBookingRules/")]
-        public IActionResult SetBookingRule(DateTime date, Rules bookingRules)
+        [HttpPost("SetBookingRules/{date:datetime}")]
+        public async Task<IActionResult> SetBookingRule(BookingRules bookingRules)
         {
-            int result = _bookingService.SetBookingRules(date.Date, bookingRules);
+            int result = await _bookingService.SetBookingRules(bookingRules.bookingDate.Date, bookingRules.rules);
             if (result > 0)
             {
                 return Ok();

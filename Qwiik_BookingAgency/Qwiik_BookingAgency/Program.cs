@@ -1,3 +1,5 @@
+using Qwiik_BookingAgency.Context;
+using Qwiik_BookingAgency.DataServices;
 using Qwiik_BookingAgency.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingDataService, BookingDataService>();
+builder.Services.AddScoped<ICustomerDataService, CustomerDataService>();
+
+builder.Services.AddDbContext<BookingDbContext>();
 
 var app = builder.Build();
 

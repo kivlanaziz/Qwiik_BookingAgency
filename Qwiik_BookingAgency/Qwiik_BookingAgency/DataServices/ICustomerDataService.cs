@@ -8,6 +8,6 @@ namespace Qwiik_BookingAgency.DataServices
         public void UpdateCustomer(Booking customer);
         public void DeleteCustomer(Guid customerId);
         public IEnumerable<Customer> GetAll();
-        public IEnumerable<Booking> GetCustomer(Guid customerId);
+        public IEnumerable<Customer> GetCustomer(Guid customerId);
     }
 }

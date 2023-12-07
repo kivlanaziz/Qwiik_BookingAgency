@@ -4,8 +4,8 @@
     {
         public class CustomerData
         {
-            string Name { get; set; }
-            string Token { get; set; }
+            public string Name { get; set; }
+            public string Token { get; set; }
         }
         public DateTime BookingDate { get; set; }
         public List<CustomerData>? Customers { get; set; }

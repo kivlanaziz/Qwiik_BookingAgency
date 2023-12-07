@@ -5,8 +5,8 @@ namespace Qwiik_BookingAgency.Services
 {
     public interface IBookingService
     {
-        public Guid BookAppointment(DateTime date);
-        public int SetBookingRules(DateTime date, Rules bookingRules);
-        public Appointment GetAppointmentSchedule(DateTime date);
+        public Task<string> BookAppointment(DateTime date);
+        public Task<int> SetBookingRules(DateTime date, Rules bookingRules);
+        public Task<Appointment> GetAppointmentSchedule(DateTime date);
     }
 }

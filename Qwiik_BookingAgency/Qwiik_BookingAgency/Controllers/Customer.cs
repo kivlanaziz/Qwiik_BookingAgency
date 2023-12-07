@@ -18,9 +18,9 @@ namespace Qwiik_BookingAgency.Controllers
         }
 
         [HttpPost("BookAppointment/{date:datetime}")]
-        public Guid BookAppointment(DateTime date)
+        public async Task<string> BookAppointment(DateTime date)
         {
-            Guid result = _bookingService.BookAppointment(date.Date);
+            String result = await _bookingService.BookAppointment(date.Date);
             return result;
         }
     }

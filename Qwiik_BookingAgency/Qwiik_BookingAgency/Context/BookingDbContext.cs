@@ -13,7 +13,7 @@ namespace Qwiik_BookingAgency.Context
             optionsBuilder.UseCosmos(
                 "https://kivlancosmosdb.documents.azure.com:443/",
                 "SVKOlJru7jJdK3G8xsrjyc3u2XRj9IVMV7vh91jmAy1UU0LGwHrpIG4kKrzBzeM4BVs1R7rSzrQgACDbJziT9A==",
-                "kivlancosmosdb"
+                "KivlanCosmosDB"
                 );
         }
 
