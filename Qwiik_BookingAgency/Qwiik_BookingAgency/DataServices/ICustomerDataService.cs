@@ -4,10 +4,10 @@ namespace Qwiik_BookingAgency.DataServices
 {
     public interface ICustomerDataService
     {
-        public void InsertCustomer(Customer customer);
-        public void UpdateCustomer(Booking customer);
-        public void DeleteCustomer(Guid customerId);
-        public IEnumerable<Customer> GetAll();
-        public IEnumerable<Customer> GetCustomer(Guid customerId);
+        public Task InsertCustomer(Customer customer);
+        public Task UpdateCustomer(Booking customer);
+        public Task DeleteCustomer(Guid customerId);
+        public IEnumerable<Customer?> GetAll();
+        public Task<Customer?> GetCustomer(Guid customerId);
     }
 }

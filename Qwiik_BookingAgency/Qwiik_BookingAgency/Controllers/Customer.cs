@@ -20,7 +20,7 @@ namespace Qwiik_BookingAgency.Controllers
         [HttpPost("BookAppointment/{date:datetime}")]
         public async Task<string> BookAppointment(DateTime date)
         {
-            String result = await _bookingService.BookAppointment(date.Date);
+            String result = await _bookingService.BookAppointment(date);
             return result;
         }
     }

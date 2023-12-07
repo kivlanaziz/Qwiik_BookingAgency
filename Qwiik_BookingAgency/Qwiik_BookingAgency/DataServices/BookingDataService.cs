@@ -15,17 +15,17 @@ namespace Qwiik_BookingAgency.DataServices
             _bookingDb = bookingDb;
         }
 
-        public void DeleteBooking(DateTime bookingDate)
+        public Task DeleteBooking(DateTime bookingDate)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Booking> GetAll()
+        public IEnumerable<Booking?> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Booking> GetBooking(DateTime bookingDate)
+        public async Task<Booking?> GetBooking(DateTime bookingDate)
         {
             if (_bookingDb.Bookings != null)
             {

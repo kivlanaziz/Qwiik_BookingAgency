@@ -8,30 +8,31 @@ namespace Qwiik_BookingAgency.Services
     {
         private ILogger<BookingService> _logger;
         private IBookingDataService _bookingDataService;
+        private ICustomerDataService _customerDataService;
 
-        public BookingService(ILogger<BookingService> logger, IBookingDataService bookingDataService)
+        public BookingService(ILogger<BookingService> logger, IBookingDataService bookingDataService, ICustomerDataService customerDataService)
         {
             _logger = logger;
             _bookingDataService = bookingDataService;
+            _customerDataService = customerDataService;
         }
 
         public async Task<string> BookAppointment(DateTime date)
         {
-            
             Customer newCustomer = new Customer()
             {
                 Id = Guid.NewGuid(),
                 BookingDate = date
             };
 
-            var result = await _bookingDataService.GetBooking(date);
+            Booking? result = await _bookingDataService.GetBooking(date.Date);
             if (result == null)
             {
                 Booking newSchedule = new Booking()
                 {
                     Id = Guid.NewGuid(),
                     CustomerLists = new List<string>(),
-                    BookingDate = date,
+                    BookingDate = date.Date,
                 };
 
                 newSchedule.BookedAppointment = 1;
@@ -40,7 +41,7 @@ namespace Qwiik_BookingAgency.Services
             }
             else
             {
-                Booking updatedSchedule = result;
+                Booking updatedSchedule = new Booking(result);
                 updatedSchedule.BookedAppointment = result.BookedAppointment + 1;
                 if (updatedSchedule.CustomerLists == null)
                 {
@@ -48,7 +49,7 @@ namespace Qwiik_BookingAgency.Services
                 }
                 else if (result.CustomerLists != null)
                 {
-                    updatedSchedule.CustomerLists = result.CustomerLists;
+                    updatedSchedule.CustomerLists = new List<string>(result.CustomerLists);
                 }
                 updatedSchedule.CustomerLists.Add(newCustomer.Id.ToString());
 
@@ -74,14 +75,16 @@ namespace Qwiik_BookingAgency.Services
                     await _bookingDataService.UpdateBooking(updatedSchedule);
                 }
             }
+
+            await _customerDataService.InsertCustomer(newCustomer);
             return newCustomer.Id.ToString();
         }
 
-        public async Task<Appointment> GetAppointmentSchedule(DateTime date)
+        public async Task<ScheduledAppointment> GetAppointmentSchedule(DateTime date)
         {
-            Appointment appointmentList = new Appointment()
+            ScheduledAppointment appointmentList = new ScheduledAppointment()
             {
-                Customers = new List<Appointment.CustomerData>()
+                Customers = new List<ScheduledAppointment.CustomerData>()
             };
             var result = await _bookingDataService.GetBooking(date);
 
@@ -92,9 +95,27 @@ namespace Qwiik_BookingAgency.Services
                 {
                     foreach (var customer in result.CustomerLists)
                     {
-                        appointmentList.Customers.Add(new Appointment.CustomerData()
+                        DateTime customerAppointmentTime = new DateTime();
+
+                        try
                         {
-                            Token = customer
+                            _logger.LogInformation($"Trying to get the customer info. Id:{customer}");
+                            Customer? customerData = await _customerDataService.GetCustomer(new Guid(customer));
+                            _logger.LogInformation($"Customer info retrieved");
+                            if (customerData != null)
+                            {
+                                customerAppointmentTime = customerData.BookingDate;
+                            }
+                        }
+                        catch
+                        {
+                            _logger.LogInformation($"Failed to get the customer info");
+                        }
+
+                        appointmentList.Customers.Add(new ScheduledAppointment.CustomerData()
+                        {
+                            Token = customer,
+                            AppointmentTime = customerAppointmentTime
                         });
                     }
                 }

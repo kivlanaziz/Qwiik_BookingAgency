@@ -10,5 +10,16 @@ namespace Qwiik_BookingAgency.Models
         public Rules? Rules { get; set; }
         public int BookedAppointment { get; set; }
         public List<string>? CustomerLists { get; set; }
+
+        public Booking() { }
+
+        public Booking(Booking other)
+        {
+            BookingDate = other.BookingDate;
+            Rules = other.Rules;
+            CustomerLists = other.CustomerLists;
+            Id = other.Id;
+            BookedAppointment = other.BookedAppointment;
+        }
     }
 }

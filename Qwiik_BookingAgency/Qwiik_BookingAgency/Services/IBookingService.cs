@@ -7,6 +7,6 @@ namespace Qwiik_BookingAgency.Services
     {
         public Task<string> BookAppointment(DateTime date);
         public Task<int> SetBookingRules(DateTime date, Rules bookingRules);
-        public Task<Appointment> GetAppointmentSchedule(DateTime date);
+        public Task<ScheduledAppointment> GetAppointmentSchedule(DateTime date);
     }
 }

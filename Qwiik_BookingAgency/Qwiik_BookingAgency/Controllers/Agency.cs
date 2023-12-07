@@ -18,12 +18,12 @@ namespace Qwiik_BookingAgency.Controllers
         }
 
         [HttpGet("GetAppointmentList/{date:datetime}")]
-        public async Task<Appointment> GetAppointmentList(DateTime date)
+        public async Task<ScheduledAppointment> GetAppointmentList(DateTime date)
         {
             return await _bookingService.GetAppointmentSchedule(date.Date);
         }
 
-        [HttpPost("SetBookingRules/{date:datetime}")]
+        [HttpPost("SetBookingRules/")]
         public async Task<IActionResult> SetBookingRule(BookingRules bookingRules)
         {
             int result = await _bookingService.SetBookingRules(bookingRules.bookingDate.Date, bookingRules.rules);
