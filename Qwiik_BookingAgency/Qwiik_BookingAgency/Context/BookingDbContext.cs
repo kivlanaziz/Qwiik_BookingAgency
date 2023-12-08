@@ -3,11 +3,24 @@ using Qwiik_BookingAgency.Models;
 
 namespace Qwiik_BookingAgency.Context
 {
+    /// <summary>
+    /// Db Context for Cosmos DB
+    /// </summary>
     public class BookingDbContext : DbContext
     {
+        /// <summary>
+        /// Bookings DbSet
+        /// </summary>
         public DbSet<Booking>? Bookings { get; set; }
+        /// <summary>
+        /// Customer DbSet
+        /// </summary>
         public DbSet<Customer>? Customer { get; set; }
 
+        /// <summary>
+        /// Override OnConfiguring Method
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseCosmos(
@@ -17,6 +30,10 @@ namespace Qwiik_BookingAgency.Context
                 );
         }
 
+        /// <summary>
+        /// Override OnModelCreating Method
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>()

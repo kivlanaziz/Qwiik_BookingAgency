@@ -4,6 +4,9 @@ using Qwiik_BookingAgency.Services;
 
 namespace Qwiik_BookingAgency.Controllers
 {
+    /// <summary>
+    /// Controller Class for Customer Endpoint
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class Customer : ControllerBase
@@ -11,6 +14,11 @@ namespace Qwiik_BookingAgency.Controllers
         IBookingService _bookingService;
         ILogger<Customer> _logger;
 
+        /// <summary>
+        /// Constructor for Customer Controller Class
+        /// </summary>
+        /// <param name="bookingService"></param>
+        /// <param name="logger"></param>
         public Customer(IBookingService bookingService, ILogger<Customer> logger)
         {
             _bookingService = bookingService;
@@ -20,7 +28,7 @@ namespace Qwiik_BookingAgency.Controllers
         /// <summary>
         /// Endpoint for customer to book for appointment
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date" example="2023-12-09"></param>
         /// <returns>Returns the token (id) given to the customer</returns>
         [HttpPost("BookAppointment/{date:datetime}")]
         public async Task<string> BookAppointment(DateTime date)

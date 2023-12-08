@@ -4,12 +4,21 @@ using Qwiik_BookingAgency.ViewModel;
 
 namespace Qwiik_BookingAgency.Services
 {
+    /// <summary>
+    /// Business Class for the Booking Service
+    /// </summary>
     public class BookingService : IBookingService
     {
         private ILogger<BookingService> _logger;
         private IBookingDataService _bookingDataService;
         private ICustomerDataService _customerDataService;
 
+        /// <summary>
+        /// Constructor Class
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="bookingDataService"></param>
+        /// <param name="customerDataService"></param>
         public BookingService(ILogger<BookingService> logger, IBookingDataService bookingDataService, ICustomerDataService customerDataService)
         {
             _logger = logger;
@@ -17,6 +26,11 @@ namespace Qwiik_BookingAgency.Services
             _customerDataService = customerDataService;
         }
 
+        /// <summary>
+        /// Method to book the appointment
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Return the token</returns>
         public async Task<string> BookAppointment(DateTime date)
         {
             Customer newCustomer = new Customer()
@@ -80,6 +94,11 @@ namespace Qwiik_BookingAgency.Services
             return newCustomer.Id.ToString();
         }
 
+        /// <summary>
+        /// Method to list the appointment schedule on that specific date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Return the list of appointment on that date</returns>
         public async Task<ScheduledAppointment> GetAppointmentSchedule(DateTime date)
         {
             ScheduledAppointment appointmentList = new ScheduledAppointment()
@@ -124,6 +143,12 @@ namespace Qwiik_BookingAgency.Services
             return appointmentList;
         }
 
+        /// <summary>
+        /// Method to set the booking rules for certain date
+        /// </summary>
+        /// <param name="bookingDate"></param>
+        /// <param name="rules"></param>
+        /// <returns></returns>
         public async Task<int> SetBookingRules(DateTime bookingDate, Rules rules)
         {
             try
