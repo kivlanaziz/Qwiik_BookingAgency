@@ -30,8 +30,8 @@ namespace Qwiik_BookingAgency.Services
         /// Method to book the appointment
         /// </summary>
         /// <param name="date"></param>
-        /// <returns>Return the token</returns>
-        public async Task<string> BookAppointment(DateTime date)
+        /// <returns>Return the customer data</returns>
+        public async Task<CustomerData> BookAppointment(DateTime date)
         {
             Customer newCustomer = new Customer()
             {
@@ -91,7 +91,11 @@ namespace Qwiik_BookingAgency.Services
             }
 
             await _customerDataService.InsertCustomer(newCustomer);
-            return newCustomer.Id.ToString();
+            return new CustomerData()
+            {
+                AppointmentTime = newCustomer.BookingDate,
+                Token = newCustomer.Id.ToString()
+            };
         }
 
         /// <summary>
@@ -103,7 +107,7 @@ namespace Qwiik_BookingAgency.Services
         {
             ScheduledAppointment appointmentList = new ScheduledAppointment()
             {
-                Customers = new List<ScheduledAppointment.CustomerData>()
+                Customers = new List<CustomerData>()
             };
             var result = await _bookingDataService.GetBooking(date);
 
@@ -131,7 +135,7 @@ namespace Qwiik_BookingAgency.Services
                             _logger.LogInformation($"Failed to get the customer info");
                         }
 
-                        appointmentList.Customers.Add(new ScheduledAppointment.CustomerData()
+                        appointmentList.Customers.Add(new CustomerData()
                         {
                             Token = customer,
                             AppointmentTime = customerAppointmentTime

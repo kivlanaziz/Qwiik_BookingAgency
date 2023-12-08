@@ -12,8 +12,8 @@ namespace Qwiik_BookingAgency.Services
         /// Method to book the appointment
         /// </summary>
         /// <param name="date"></param>
-        /// <returns>Return the token</returns>
-        public Task<string> BookAppointment(DateTime date);
+        /// <returns>Returns the Customer Data</returns>
+        public Task<CustomerData> BookAppointment(DateTime date);
 
         /// <summary>
         /// Method to set the booking rules for certain date

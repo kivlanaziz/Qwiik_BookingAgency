@@ -38,12 +38,12 @@ namespace Qwiik_BookingAgency.UnitTest
             ScheduledAppointment expectedResult = new ScheduledAppointment()
             {
                 BookingDate = new DateTime(2023, 12, 7),
-                Customers = new List<ScheduledAppointment.CustomerData>()
+                Customers = new List<CustomerData>()
             };
 
             for (int i=1; i<=3; i++)
             {
-                var customer = new ScheduledAppointment.CustomerData();
+                var customer = new CustomerData();
                 customer.Token = i.ToString();
                 expectedResult.Customers.Add(customer);
             }

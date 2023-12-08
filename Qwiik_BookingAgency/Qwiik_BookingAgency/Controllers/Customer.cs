@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Qwiik_BookingAgency.Services;
+using Qwiik_BookingAgency.ViewModel;
 
 namespace Qwiik_BookingAgency.Controllers
 {
@@ -29,11 +30,11 @@ namespace Qwiik_BookingAgency.Controllers
         /// Endpoint for customer to book for appointment
         /// </summary>
         /// <param name="date" example="2023-12-09"></param>
-        /// <returns>Returns the token (id) given to the customer</returns>
+        /// <returns>Returns the customer data</returns>
         [HttpPost("BookAppointment/{date:datetime}")]
-        public async Task<string> BookAppointment(DateTime date)
+        public async Task<CustomerData> BookAppointment(DateTime date)
         {
-            String result = await _bookingService.BookAppointment(date);
+            CustomerData result = await _bookingService.BookAppointment(date);
             return result;
         }
     }
